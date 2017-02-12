@@ -20,6 +20,7 @@ int Dequeue(Queue* pq);
 int Peek(Queue* pq);
 int Size(Queue* pq);
 void Traverse(Queue* pq);
+void Clear(Queue* pq);
 
 int main()
 {
@@ -28,9 +29,9 @@ int main()
 	Create(&q);
 	//enqueue
 	Enqueue(&q, 10);
-	Enqueue(&q, 20);
-	Enqueue(&q, 30);
-	Enqueue(&q, 40);
+	//Enqueue(&q, 20);
+	//Enqueue(&q, 30);
+	//Enqueue(&q, 40);
 	// dequeue
 	if (!IsEmpty(&q))
 	{
@@ -52,12 +53,15 @@ int main()
 	{
 		printf("The queue is empty.\n");
 	}
-	
+	//Size
 	int re = Size(&q);
 	printf("size %d\n", re);
 	
-
+	// Traverse
 	Traverse(&q);
+	//Clear
+	Clear(&q);
+
 	
 	
 }
@@ -188,4 +192,13 @@ void Traverse(Queue* pq)
 		}
 	}
 
+}
+
+// Clear all elements
+void Clear(Queue* pq)
+{
+	while (!IsEmpty(pq))
+	{
+		Dequeue(pq);
+	}
 }
