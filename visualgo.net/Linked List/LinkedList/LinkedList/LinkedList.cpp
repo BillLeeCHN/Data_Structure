@@ -12,6 +12,7 @@ void Add(LList* head, int value);
 void Insert(LList* head, int index, int value);
 int Search(LList* head, int value);
 void Remove(LList* head, int index);
+int Size(LList* head);
 
 int main()
 {
@@ -26,7 +27,10 @@ int main()
 	Remove(p, 2);
 
 	int re = Search(p, 40);
-	printf("%d\n", re);
+	printf("the index of this element is %d\n", re);
+
+	int size = Size(p);
+	printf("the size of this list is %d\n", size);
 	
 	return 0;
 }
@@ -163,4 +167,18 @@ void Remove(LList* head, int index)
 	pprev->next = ptemp->next;
 	ptemp->next = NULL;
 	free(ptemp);
+}
+
+// Function: Count the element
+int Size(LList* head)
+{
+	LList* ptemp = head;
+	int count = 0; // the number of element
+
+	while (ptemp->next != NULL)
+	{
+		count++;
+		ptemp = ptemp->next;
+	}
+	return count;
 }
