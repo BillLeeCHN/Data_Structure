@@ -21,6 +21,7 @@ int Peek(Queue* pq);
 int Size(Queue* pq);
 void Traverse(Queue* pq);
 void Clear(Queue* pq);
+void Destroy(Queue* pq);
 
 int main()
 {
@@ -29,9 +30,9 @@ int main()
 	Create(&q);
 	//enqueue
 	Enqueue(&q, 10);
-	//Enqueue(&q, 20);
-	//Enqueue(&q, 30);
-	//Enqueue(&q, 40);
+	Enqueue(&q, 20);
+	Enqueue(&q, 30);
+	Enqueue(&q, 40);
 	// dequeue
 	if (!IsEmpty(&q))
 	{
@@ -61,9 +62,8 @@ int main()
 	Traverse(&q);
 	//Clear
 	Clear(&q);
-
-	
-	
+	//Destroy
+	Destroy(&q);
 }
 
 // Create a new queue
@@ -201,4 +201,15 @@ void Clear(Queue* pq)
 	{
 		Dequeue(pq);
 	}
+}
+
+// Destroy the queue
+void Destroy(Queue* pq)
+{
+	// Clear the queue firstly
+	Clear(pq);
+	// destroy the queue
+	pq->rear = NULL;
+	free(pq->front);
+	pq->front = NULL;
 }
