@@ -18,6 +18,7 @@ bool IsEmpty(Queue* pq);
 void Enqueue(Queue* pq, int value);
 int Dequeue(Queue* pq);
 int Peek(Queue* pq);
+int Size(Queue* pq);
 
 int main()
 {
@@ -26,7 +27,7 @@ int main()
 	Create(&q);
 	//enqueue
 	Enqueue(&q, 10);
-	//Enqueue(&q, 20);
+	Enqueue(&q, 20);
 	// dequeue
 	if (!IsEmpty(&q))
 	{
@@ -49,6 +50,8 @@ int main()
 		printf("The queue is empty.\n");
 	}
 	
+	int re = Size(&q);
+	printf("size %d\n", re);
 	
 	
 	
@@ -142,4 +145,22 @@ int Peek(Queue* pq)
 	{
 		// printf("The queue is empty.\n");
 	}
+}
+
+// Count the number of elements
+int Size(Queue* pq)
+{
+	node* ptemp = pq->front;
+	int count = 0;
+
+	if (!IsEmpty(pq))
+	{
+		count++;
+		while (ptemp->next != pq->rear)
+		{
+			ptemp = ptemp->next;
+			count++;
+		}
+	}
+	return count;
 }
