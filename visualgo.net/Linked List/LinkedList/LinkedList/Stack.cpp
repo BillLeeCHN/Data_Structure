@@ -19,23 +19,27 @@ bool IsEmpty(Stack* ps);
 int Peek(Stack* ps);
 void Pop(Stack* ps);
 void Clear(Stack* ps);
+void Traverse(Stack* ps);
 
 int main()
 {
+	// Create
 	Stack s;
 	Create(&s);
-
+	// Push element
 	Push(&s, 10);
 	Push(&s, 20);
 	Push(&s, 30);
 	Push(&s, 40);
-
+	// Pop element
 	Pop(&s);
 	Pop(&s);
-
+	// Peek
 	int result = Peek(&s);
 	printf("%d\n", result);
-
+	// Traverse
+	Traverse(&s);
+	// Clear
 	Clear(&s);
 	if (!IsEmpty(&s))
 	{
@@ -47,7 +51,6 @@ int main()
 		printf("The stack is empty.\n");
 	}
 	
-
 	return 0;
 }
 
@@ -138,5 +141,16 @@ void Clear(Stack* ps)
 
 	//printf("The stack has cleared.\n");
 	return;
+}
+
+//
+void Traverse(Stack* ps)
+{
+	node* ptemp = ps->pTop;
+	while (ptemp != ps->pButton)
+	{
+		printf("%d\n", ptemp->data);
+		ptemp = ptemp->next;
+	}
 }
 		
