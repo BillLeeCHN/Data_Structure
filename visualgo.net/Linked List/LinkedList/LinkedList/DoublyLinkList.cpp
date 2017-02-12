@@ -16,6 +16,7 @@ typedef struct _dbList
 
 void Create(dbList* pdl);
 void Add(dbList* pdl, int value);
+bool IsEmpty(dbList* pdl);
 
 int main()
 {
@@ -23,6 +24,15 @@ int main()
 	Create(&dl);
 	// Add
 	Add(&dl, 10);
+	//
+	if (IsEmpty(&dl))
+	{
+		printf("empty\n");
+	}
+	else
+	{
+		printf("not empty\n");
+	}
 
 
 	return 0;
@@ -62,4 +72,18 @@ void Add(dbList* pdl, int value)
 	pdl->tail->next = pnew;
 	pnew->prev = pdl->tail;
 	pdl->tail = pnew;
+}
+
+// Is the doubly llist empty?
+bool IsEmpty(dbList* pdl)
+{
+	if (pdl->head == pdl->tail)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 }
