@@ -15,13 +15,38 @@ typedef struct _Stack
 
 void Create(Stack* ps);
 void Push(Stack* ps, int value);
+bool IsEmpty(Stack* ps);
+int Peek(Stack* ps);
+void Pop(Stack* ps);
+void Clear(Stack* ps);
 
 int main()
 {
 	Stack s;
 	Create(&s);
 
-	Push(&s, 12);
+	Push(&s, 10);
+	Push(&s, 20);
+	Push(&s, 30);
+	Push(&s, 40);
+
+	Pop(&s);
+	Pop(&s);
+
+	int result = Peek(&s);
+	printf("%d\n", result);
+
+	Clear(&s);
+	if (!IsEmpty(&s))
+	{
+		result = Peek(&s);
+		printf("%d\n", result);
+	}
+	else
+	{
+		printf("The stack is empty.\n");
+	}
+	
 
 	return 0;
 }
@@ -37,6 +62,7 @@ void Create(Stack* ps)
 		return;
 	}
 	pnew->next = NULL;
+	pnew->data = 0;
 
 	ps->pTop = pnew;
 	ps->pButton = pnew;
@@ -53,8 +79,64 @@ void Push(Stack* ps, int value)
 		return;
 	}
 	pnew->next = NULL;
+	pnew->data = value;
 
 	// Push
 	pnew->next = ps->pTop;
 	ps->pTop = pnew;
 }
+
+// Function: Is the stack empty?
+bool IsEmpty(Stack* ps)
+{
+	if (ps->pTop == ps->pButton)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+// Function: Peek the top element of stack
+int Peek(Stack* ps)
+{
+	if (IsEmpty(ps))
+	{
+		printf("There is no element in this stack!\n");
+		return 0;
+	}
+	else
+	{
+		return ps->pTop->data;
+	}
+}
+
+// Function: Pop the top element of stack
+void Pop(Stack* ps)
+{
+	if (IsEmpty(ps))
+	{
+		printf("The stack is empty.\n");
+	}
+	else
+	{
+		node* ptemp = ps->pTop;
+		ps->pTop = ptemp->next;
+		free(ptemp);
+	}
+}
+
+// Function: Clear the stack
+void Clear(Stack* ps)
+{
+	while (!IsEmpty(ps))
+	{
+		Pop(ps);
+	}
+
+	//printf("The stack has cleared.\n");
+	return;
+}
+		
