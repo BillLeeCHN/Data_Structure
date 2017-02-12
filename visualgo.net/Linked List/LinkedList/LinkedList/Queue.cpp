@@ -17,6 +17,7 @@ void Create(Queue* pq);
 bool IsEmpty(Queue* pq);
 void Enqueue(Queue* pq, int value);
 int Dequeue(Queue* pq);
+int Peek(Queue* pq);
 
 int main()
 {
@@ -25,6 +26,7 @@ int main()
 	Create(&q);
 	//enqueue
 	Enqueue(&q, 10);
+	//Enqueue(&q, 20);
 	// dequeue
 	if (!IsEmpty(&q))
 	{
@@ -35,7 +37,17 @@ int main()
 	{
 		printf("The queue is empty.\n");
 	}
-	
+	// peek
+	if (!IsEmpty(&q))
+	{
+		printf("haha");
+		int result = Peek(&q);
+		printf("The peeked element is %d\n", result);
+	}
+	else
+	{
+		printf("The queue is empty.\n");
+	}
 	
 	
 	
@@ -98,8 +110,18 @@ int Dequeue(Queue* pq)
 	if (!IsEmpty(pq))
 	{
 		node* ptemp = pq->front->next;
-		pq->front->next = ptemp->next;
 		result = ptemp->data;
+		if (NULL == ptemp->next)
+		{
+			pq->rear = pq->front;
+		}
+		else
+		{
+			pq->front->next = ptemp->next;
+		}
+
+		
+		
 		free(ptemp);
 	}
 	else
@@ -107,4 +129,17 @@ int Dequeue(Queue* pq)
 		//printf("The queue is empty.\n");
 	}
 	return result;	
+}
+
+// Peek the front element
+int Peek(Queue* pq)
+{
+	if (!IsEmpty(pq))
+	{
+		return pq->front->next->data;
+	}
+	else
+	{
+		// printf("The queue is empty.\n");
+	}
 }
