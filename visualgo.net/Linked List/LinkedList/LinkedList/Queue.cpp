@@ -19,6 +19,7 @@ void Enqueue(Queue* pq, int value);
 int Dequeue(Queue* pq);
 int Peek(Queue* pq);
 int Size(Queue* pq);
+void Traverse(Queue* pq);
 
 int main()
 {
@@ -28,6 +29,8 @@ int main()
 	//enqueue
 	Enqueue(&q, 10);
 	Enqueue(&q, 20);
+	Enqueue(&q, 30);
+	Enqueue(&q, 40);
 	// dequeue
 	if (!IsEmpty(&q))
 	{
@@ -53,6 +56,8 @@ int main()
 	int re = Size(&q);
 	printf("size %d\n", re);
 	
+
+	Traverse(&q);
 	
 	
 }
@@ -163,4 +168,24 @@ int Size(Queue* pq)
 		}
 	}
 	return count;
+}
+
+// Traverse all elements
+void Traverse(Queue* pq)
+{
+	node* ptemp = pq->front;
+	if (IsEmpty(pq))
+	{
+		printf("There is no element in this queue.\n");
+	}
+	else
+	{
+		printf("%d\n",ptemp->next->data);
+		while (ptemp->next != pq->rear)
+		{
+			ptemp = ptemp->next;
+			printf("%d\n",ptemp->next->data);
+		}
+	}
+
 }
