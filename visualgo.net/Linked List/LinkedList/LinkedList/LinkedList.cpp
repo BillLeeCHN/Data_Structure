@@ -10,6 +10,7 @@ typedef struct _LList
 LList* Create();
 void Add(LList* head, int value);
 void Insert(LList* head, int index, int value);
+int Search(LList* head, int value);
 
 int main()
 {
@@ -19,7 +20,10 @@ int main()
 	Add(p, 30);
 	Add(p, 40);
 
-	Insert(p, -1, 10);
+	Insert(p, 1, 10);
+
+	int re = Search(p, 40);
+	printf("%d\n", re);
 	
 	return 0;
 }
@@ -96,4 +100,34 @@ void Insert(LList* head, int index, int value)
 	}
 	pnew->next = ptemp->next;
 	ptemp->next = pnew;
+}
+
+// 功能：在链表中搜索某个值，返回所在的索引位置
+int Search(LList* head, int value)
+{
+	LList* ptemp;
+
+	// 判断链表有没有元素
+	if (head->next == NULL)
+	{
+		printf("There is no element in this link list!");
+		return -1;
+	}
+
+	ptemp = head->next;
+	int index = 0;
+	while (ptemp != NULL)
+	{
+		if (ptemp->data == value)
+		{
+			return index;
+		}
+		else
+		{
+			ptemp = ptemp->next;
+			index++;
+		}
+	}
+	printf("The value is not found");
+	return -1;
 }
