@@ -13,6 +13,7 @@ void Insert(LList* head, int index, int value);
 int Search(LList* head, int value);
 void Remove(LList* head, int index);
 int Size(LList* head);
+void Print(LList* head);
 
 int main()
 {
@@ -31,6 +32,8 @@ int main()
 
 	int size = Size(p);
 	printf("the size of this list is %d\n", size);
+
+	Print(p);
 	
 	return 0;
 }
@@ -181,4 +184,15 @@ int Size(LList* head)
 		ptemp = ptemp->next;
 	}
 	return count;
+}
+
+// Function: Print all the elements of this list
+void Print(LList* head)
+{
+	LList* ptemp = head;
+	while (ptemp->next != NULL)
+	{
+		ptemp = ptemp->next;
+		printf("%d\n", ptemp->data);
+	}
 }
