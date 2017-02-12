@@ -16,6 +16,7 @@ typedef struct _queue
 void Create(Queue* pq);
 bool IsEmpty(Queue* pq);
 void Enqueue(Queue* pq, int value);
+int Dequeue(Queue* pq);
 
 int main()
 {
@@ -24,16 +25,17 @@ int main()
 	Create(&q);
 	//enqueue
 	Enqueue(&q, 10);
-	// empty?
-	if (IsEmpty(&q))
+	// dequeue
+	if (!IsEmpty(&q))
 	{
-		printf("The queue is empty.\n");
+		int result = Dequeue(&q);
+		printf("The deleted element is %d\n", result);
 	}
 	else
 	{
-		printf("The queue is not empty.\n");
+		printf("The queue is empty.\n");
 	}
-
+	
 	
 	
 	
@@ -86,4 +88,23 @@ void Enqueue(Queue* pq, int value)
 	// enqueue
 	pq->rear->next = pnew;
 	pq->rear = pnew;
+}
+
+// delete an element from queue
+// and return the deleted element
+int Dequeue(Queue* pq)
+{
+	int result = 0;
+	if (!IsEmpty(pq))
+	{
+		node* ptemp = pq->front->next;
+		pq->front->next = ptemp->next;
+		result = ptemp->data;
+		free(ptemp);
+	}
+	else
+	{
+		//printf("The queue is empty.\n");
+	}
+	return result;	
 }
