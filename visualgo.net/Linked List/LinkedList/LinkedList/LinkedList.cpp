@@ -9,6 +9,7 @@ typedef struct _LList
 
 LList* Create();
 void Add(LList* head, int value);
+void Insert(LList* head, int index, int value);
 
 int main()
 {
@@ -17,6 +18,8 @@ int main()
 	Add(p, 20);
 	Add(p, 30);
 	Add(p, 40);
+
+	Insert(p, -1, 10);
 	
 	return 0;
 }
@@ -63,5 +66,34 @@ void Add(LList* head, int value)
 	pnew->data = value; // assign a value
 
 	// Add the new node
+	ptemp->next = pnew;
+}
+
+// 功能：向链表的索引为 index 的位置插入一个值 value
+void Insert(LList* head, int index, int value)
+{
+	LList* pnew;
+	pnew = (LList*)malloc(sizeof(LList));
+	//创建失败返回
+	if (pnew==NULL) 
+	{ 
+        printf("创建结点失败！");
+        return;
+    }
+	pnew->next = NULL;
+	pnew->data = value;
+
+	LList* ptemp = head;
+	while (index != 0)
+	{
+		ptemp = ptemp->next;
+		if (ptemp == NULL)
+		{
+			printf("Please enter a valid index!\n");
+			return;
+		}
+		index--;
+	}
+	pnew->next = ptemp->next;
 	ptemp->next = pnew;
 }
