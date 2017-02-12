@@ -11,6 +11,7 @@ LList* Create();
 void Add(LList* head, int value);
 void Insert(LList* head, int index, int value);
 int Search(LList* head, int value);
+void Remove(LList* head, int index);
 
 int main()
 {
@@ -21,6 +22,8 @@ int main()
 	Add(p, 40);
 
 	Insert(p, 1, 10);
+
+	Remove(p, 2);
 
 	int re = Search(p, 40);
 	printf("%d\n", re);
@@ -130,4 +133,34 @@ int Search(LList* head, int value)
 	}
 	printf("The value is not found");
 	return -1;
+}
+
+// 功能：删除链表 index 位置的值
+void Remove(LList* head, int index)
+{
+	LList* ptemp, *pprev;
+
+	// 判断链表有没有元素
+	if (head->next == NULL)
+	{
+		printf("There is no element in this link list!");
+		return ;
+	}
+
+	ptemp = head->next;
+	int index_ele = 0;
+	while(index_ele != index)
+	{
+		index_ele++;
+		pprev = ptemp;
+		ptemp = ptemp->next;
+		if (ptemp->next == NULL)
+		{
+			printf("invalid removed index");
+			return ;
+		}
+	}
+	pprev->next = ptemp->next;
+	ptemp->next = NULL;
+	free(ptemp);
 }
