@@ -14,11 +14,14 @@ typedef struct _Stack
 }Stack;
 
 void Create(Stack* ps);
+void Push(Stack* ps, int value);
 
 int main()
 {
 	Stack s;
 	Create(&s);
+
+	Push(&s, 12);
 
 	return 0;
 }
@@ -26,14 +29,32 @@ int main()
 // Function: Create an empty stack
 void Create(Stack* ps)
 {
+	// Create a new node
 	node* pnew = (node*)malloc(sizeof(node));
-	if (pnew == NULL)
+	if (NULL == pnew)
 	{
 		printf("create failed!\n");
 		return;
 	}
-	
+	pnew->next = NULL;
+
 	ps->pTop = pnew;
 	ps->pButton = pnew;
-	ps->pTop->next = NULL;
+}
+
+// Function: Push a new element into stack
+void Push(Stack* ps, int value)
+{
+	// Create a new node
+	node* pnew = (node*)malloc(sizeof(node));
+	if (NULL == pnew)
+	{
+		printf("create failed!\n");
+		return;
+	}
+	pnew->next = NULL;
+
+	// Push
+	pnew->next = ps->pTop;
+	ps->pTop = pnew;
 }
