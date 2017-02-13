@@ -38,7 +38,7 @@ int main()
 	return 0;
 }
 
-// ´´½¨Ò»¸ö¿ÕµÄÁ´±í£¬½öÓÐÍ·½áµãºÍÍ·Ö¸Õë
+// åˆ›å»ºä¸€ä¸ªç©ºçš„é“¾è¡¨ï¼Œä»…æœ‰å¤´ç»“ç‚¹å’Œå¤´æŒ‡é’ˆ
 LList* Create()
 {
 	LList* head; // head pointer
@@ -47,7 +47,7 @@ LList* Create()
 	//create failed
 	if (head==NULL) 
 	{ 
-        printf("´´½¨Á´±íÊ§°Ü£¡");
+        printf("åˆ›å»ºé“¾è¡¨å¤±è´¥ï¼");
         return NULL;
     }
 
@@ -55,7 +55,7 @@ LList* Create()
 	return head;
 }
 
-// ÏòÁ´±íÎ²²¿Ìí¼ÓÔªËØ
+// å‘é“¾è¡¨å°¾éƒ¨æ·»åŠ å…ƒç´ 
 void Add(LList* head, int value)
 {
 	LList* ptemp = head;
@@ -70,10 +70,10 @@ void Add(LList* head, int value)
 	// Create a new node
 	LList* pnew;
 	pnew = (LList*)malloc(sizeof(LList));
-	//´´½¨Ê§°Ü·µ»Ø
+	//åˆ›å»ºå¤±è´¥è¿”å›ž
 	if (pnew==NULL) 
 	{ 
-        printf("´´½¨Á´±íÊ§°Ü£¡");
+        printf("åˆ›å»ºé“¾è¡¨å¤±è´¥ï¼");
         return;
     }
 	pnew->next = NULL;
@@ -83,15 +83,15 @@ void Add(LList* head, int value)
 	ptemp->next = pnew;
 }
 
-// ¹¦ÄÜ£ºÏòÁ´±íµÄË÷ÒýÎª index µÄÎ»ÖÃ²åÈëÒ»¸öÖµ value
+// åŠŸèƒ½ï¼šå‘é“¾è¡¨çš„ç´¢å¼•ä¸º index çš„ä½ç½®æ’å…¥ä¸€ä¸ªå€¼ value
 void Insert(LList* head, int index, int value)
 {
 	LList* pnew;
 	pnew = (LList*)malloc(sizeof(LList));
-	//´´½¨Ê§°Ü·µ»Ø
+	//åˆ›å»ºå¤±è´¥è¿”å›ž
 	if (pnew==NULL) 
 	{ 
-        printf("´´½¨½áµãÊ§°Ü£¡");
+        printf("åˆ›å»ºç»“ç‚¹å¤±è´¥ï¼");
         return;
     }
 	pnew->next = NULL;
@@ -112,12 +112,12 @@ void Insert(LList* head, int index, int value)
 	ptemp->next = pnew;
 }
 
-// ¹¦ÄÜ£ºÔÚÁ´±íÖÐËÑË÷Ä³¸öÖµ£¬·µ»ØËùÔÚµÄË÷ÒýÎ»ÖÃ
+// åŠŸèƒ½ï¼šåœ¨é“¾è¡¨ä¸­æœç´¢æŸä¸ªå€¼ï¼Œè¿”å›žæ‰€åœ¨çš„ç´¢å¼•ä½ç½®
 int Search(LList* head, int value)
 {
 	LList* ptemp;
 
-	// ÅÐ¶ÏÁ´±íÓÐÃ»ÓÐÔªËØ
+	// åˆ¤æ–­é“¾è¡¨æœ‰æ²¡æœ‰å…ƒç´ 
 	if (head->next == NULL)
 	{
 		printf("There is no element in this link list!");
@@ -142,12 +142,12 @@ int Search(LList* head, int value)
 	return -1;
 }
 
-// ¹¦ÄÜ£ºÉ¾³ýÁ´±í index Î»ÖÃµÄÖµ
+// åŠŸèƒ½ï¼šåˆ é™¤é“¾è¡¨ index ä½ç½®çš„å€¼
 void Remove(LList* head, int index)
 {
 	LList* ptemp, *pprev;
 
-	// ÅÐ¶ÏÁ´±íÓÐÃ»ÓÐÔªËØ
+	// åˆ¤æ–­é“¾è¡¨æœ‰æ²¡æœ‰å…ƒç´ 
 	if (head->next == NULL)
 	{
 		printf("There is no element in this link list!");
@@ -158,18 +158,27 @@ void Remove(LList* head, int index)
 	int index_ele = 0;
 	while(index_ele != index)
 	{
-		index_ele++;
-		pprev = ptemp;
-		ptemp = ptemp->next;
 		if (ptemp->next == NULL)
 		{
 			printf("invalid removed index");
 			return ;
 		}
+		index_ele++;
+		pprev = ptemp;
+		ptemp = ptemp->next;
 	}
-	pprev->next = ptemp->next;
-	ptemp->next = NULL;
-	free(ptemp);
+	if (NULL == ptemp->next)
+	{
+		pprev->next = NULL;
+		free(ptemp);
+	}
+	else
+	{
+		pprev->next = ptemp->next;
+		ptemp->next = NULL;
+		free(ptemp);
+	}
+	
 }
 
 // Function: Count the element
