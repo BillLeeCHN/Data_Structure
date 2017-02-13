@@ -14,48 +14,54 @@ int Search(LList* head, int value);
 void RemoveRange(LList* head, int index, int count);
 int Size(LList* head);
 void Print(LList* head);
+int Get(LList* head, int index);
 
 int main()
 {
+	// Create
 	LList* p = Create();
+	// Add
 	Add(p, 10);
 	Add(p, 20);
 	Add(p, 30);
 	Add(p, 40);
-
+	// Insert
 	Insert(p, 1, 10);
-
-	RemoveRange(p, 2);
-
+	// RemoveRange
+	RemoveRange(p, 2, 4);
+	// Search
 	int re = Search(p, 40);
 	printf("the index of this element is %d\n", re);
-
+	// Size
 	int size = Size(p);
 	printf("the size of this list is %d\n", size);
-
+	// Print
 	Print(p);
-	
+	// Get
+	int get_result = Get(p, 2);
+	printf("The element you want is %d\n", get_result);
+
 	return 0;
 }
 
-// 创建一个空的链表，仅有头结点和头指针
+// Create an empty list which just has a head point and a head node
 LList* Create()
 {
 	LList* head; // head pointer
 	head = (LList*)malloc(sizeof(LList));
 
 	//create failed
-	if (head==NULL) 
-	{ 
-        printf("创建链表失败！");
-        return NULL;
+	if (NULL == head)
+	{
+		printf("Create failed.\n");
+		exit(-1);
     }
 
 	head->next = NULL;
 	return head;
 }
 
-// 向链表尾部添加元素
+// Add new element into tail node
 void Add(LList* head, int value)
 {
 	LList* ptemp = head;
@@ -70,11 +76,11 @@ void Add(LList* head, int value)
 	// Create a new node
 	LList* pnew;
 	pnew = (LList*)malloc(sizeof(LList));
-	//创建失败返回
-	if (pnew==NULL) 
-	{ 
-        printf("创建链表失败！");
-        return;
+	//Create failed
+	if (NULL == pnew)
+	{
+		printf("Create failed.\n");
+		exit(-1);
     }
 	pnew->next = NULL;
 	pnew->data = value; // assign a value
@@ -89,9 +95,9 @@ void Insert(LList* head, int index, int value)
 	LList* pnew;
 	pnew = (LList*)malloc(sizeof(LList));
 	//创建失败返回
-	if (pnew==NULL) 
-	{ 
-        printf("创建结点失败！");
+	if (pnew==NULL)
+	{
+        printf("创建结点失败！\n");;
         return;
     }
 	pnew->next = NULL;
@@ -143,7 +149,7 @@ int Search(LList* head, int value)
 }
 
 // 功能：删除链表 index 位置的值
-void RemoveRange(LList* head, int index, int count = 1)
+void RemoveRange(LList* head, int index, int count)
 {
 	LList* ptemp, *pprev;
 
@@ -175,6 +181,7 @@ void RemoveRange(LList* head, int index, int count = 1)
 		{
 			pprev->next = NULL;
 			free(ptemp);
+			break;
 		}
 		else // if the node is not the last node
 		{
@@ -183,10 +190,7 @@ void RemoveRange(LList* head, int index, int count = 1)
 			free(ptemp);
 			ptemp = pprev->next;
 		}
-		
 	}
-	
-	
 }
 
 // Function: Count the element
@@ -212,4 +216,31 @@ void Print(LList* head)
 		ptemp = ptemp->next;
 		printf("%d\n", ptemp->data);
 	}
+}
+
+int Get(LList* head, int index)
+{
+	if (NULL == head->next)
+	{
+		printf("There is no element in this list.\n");
+		exit(-1);
+	}
+
+	// this list is not empty.
+	// Move to the target position(index)
+	LList* ptemp = head->next;
+	int index_ele = 0;
+	int result;
+	while (index_ele != index)
+	{
+		if (NULL == ptemp->next)
+		{
+			printf("Get funtion: the index is out of range.\n");
+			exit(-1);
+		}
+		ptemp = ptemp->next;
+		index_ele++;
+	}
+	result = ptemp->data;
+	return result;
 }
