@@ -11,7 +11,7 @@ LList* Create();
 void Add(LList* head, int value);
 void Insert(LList* head, int index, int value);
 int Search(LList* head, int value);
-void Remove(LList* head, int index);
+void RemoveRange(LList* head, int index, int count);
 int Size(LList* head);
 void Print(LList* head);
 
@@ -25,7 +25,7 @@ int main()
 
 	Insert(p, 1, 10);
 
-	Remove(p, 2);
+	RemoveRange(p, 2);
 
 	int re = Search(p, 40);
 	printf("the index of this element is %d\n", re);
@@ -143,7 +143,7 @@ int Search(LList* head, int value)
 }
 
 // 功能：删除链表 index 位置的值
-void Remove(LList* head, int index)
+void RemoveRange(LList* head, int index, int count = 1)
 {
 	LList* ptemp, *pprev;
 
@@ -169,17 +169,23 @@ void Remove(LList* head, int index)
 		ptemp = ptemp->next;
 	}
 	// remove the node
-	if (NULL == ptemp->next)  // if the node is the last node
+	for (int i = 0; i < count; i++)
 	{
-		pprev->next = NULL;
-		free(ptemp);
+		if (NULL == ptemp->next)  // if the node is the last node
+		{
+			pprev->next = NULL;
+			free(ptemp);
+		}
+		else // if the node is not the last node
+		{
+			pprev->next = ptemp->next;
+			ptemp->next = NULL;
+			free(ptemp);
+			ptemp = pprev->next;
+		}
+		
 	}
-	else // if the node is not the last node
-	{
-		pprev->next = ptemp->next;
-		ptemp->next = NULL;
-		free(ptemp);
-	}
+	
 	
 }
 
