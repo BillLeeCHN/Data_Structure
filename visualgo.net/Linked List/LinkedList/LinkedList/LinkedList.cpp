@@ -155,6 +155,7 @@ void Remove(LList* head, int index)
 	}
 
 	ptemp = head->next;
+	pprev = head;
 	int index_ele = 0;
 	while(index_ele != index)
 	{
@@ -167,12 +168,13 @@ void Remove(LList* head, int index)
 		pprev = ptemp;
 		ptemp = ptemp->next;
 	}
-	if (NULL == ptemp->next)
+	// remove the node
+	if (NULL == ptemp->next)  // if the node is the last node
 	{
 		pprev->next = NULL;
 		free(ptemp);
 	}
-	else
+	else // if the node is not the last node
 	{
 		pprev->next = ptemp->next;
 		ptemp->next = NULL;
