@@ -87,3 +87,26 @@ bool IsEmpty(dbList* pdl)
 	}
 
 }
+
+// Insert element
+void Insert(dbList* pdl, int index, int value)
+{
+	// Create a node
+	dbNode* pnew = (dbNode*)malloc(sizeof(_dbNode));
+	if (NULL == pnew)
+	{
+		printf("Create failed.\n");
+		return;
+	}
+	pnew->prev = NULL;
+	pnew->next = NULL;
+	pnew->data = value;
+
+	// Insert a node
+	dbNode* ptemp = pdl->head;
+	while (ptemp)
+	{
+
+	}
+
+}
