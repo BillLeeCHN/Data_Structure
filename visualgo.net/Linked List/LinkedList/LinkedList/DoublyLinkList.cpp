@@ -18,6 +18,10 @@ void Create(dbList* pdl);
 void Add(dbList* pdl, int value);
 bool IsEmpty(dbList* pdl);
 void Insert(dbList* pdl, int index, int value);
+int Size(dbList* pdl);
+void Remove(dbList* pdl, int index);
+void RemoveRange(dbList* pdl, int index, int cnt);
+void Traverse(dbList* pdl);
 
 int main()
 {
@@ -25,7 +29,7 @@ int main()
 	Create(&dl);
 	// Add
 	Add(&dl, 10);
-	//
+	// IsEmpty
 	if (IsEmpty(&dl))
 	{
 		printf("empty\n");
@@ -34,9 +38,17 @@ int main()
 	{
 		printf("not empty\n");
 	}
-
+	// Insert
 	Insert(&dl, 1, 20);
-
+	// Remove
+	Remove(&dl,-1);
+	// RemoveRange
+	//RemoveRange(&dl,1,1);
+	// Size
+	int size_list = Size(&dl);
+	printf("The size of list is %d\n", size_list);
+	// Traverse
+	Traverse(&dl);
 	return 0;
 }
 
@@ -105,7 +117,6 @@ void Insert(dbList* pdl, int index, int value)
 
 	// Insert a node
 	dbNode* ptemp = pdl->head;
-	dbNode* pprev = pdl->head;
 	while (index != 0)
 	{
 		if (NULL == ptemp->next)
@@ -114,7 +125,7 @@ void Insert(dbList* pdl, int index, int value)
 			return;
 		}
 		ptemp = ptemp->next;
-		pprev = pprev->next;
+		//pprev = pprev->next;
 		index--;
 	}
 	// if the postion is the tail of list,
@@ -122,12 +133,103 @@ void Insert(dbList* pdl, int index, int value)
 	if (NULL == ptemp->next)
 	{
 		Add(pdl, value);
-		return;
 	}
-	// otherwise
-	ptemp = ptemp->next;
-	pprev->next = pnew;
-	pnew->prev = pprev;
-	pnew->next = ptemp;
-	ptemp->prev = pnew;
+	else // otherwise
+	{
+		dbNode* pprev = ptemp;
+		ptemp = ptemp->next;
+
+		pprev->next = pnew;
+		pnew->prev = pprev;
+		pnew->next = ptemp;
+		ptemp->prev = pnew;
+	}
+}
+
+int Size(dbList* pdl)
+{
+	int count = 0;
+	dbNode* ptemp = pdl->head;
+
+	while (pdl->tail != ptemp)
+	{
+		ptemp = ptemp->next;
+		count++;
+	}
+	return count;
+}
+
+void Remove(dbList* pdl, int index)
+{
+	RemoveRange(pdl, index, 1);
+}
+
+void RemoveRange(dbList* pdl, int index, int cnt)
+{
+	// if the doubly linked list is empty
+	// it can not be removed any element
+	int count = Size(pdl);
+	if (index < 0)
+	{
+		printf("The index can not be negative.\n");
+	}
+	else if (0 == count)
+	{
+		printf("There is no element in this doubly linked list.\n");
+		//return;
+	}
+	else if (count < (index + 1))
+	{
+		printf("The index is greater than size of this list.\n");
+		//return;
+	}
+	else if (count < (index + cnt))
+	{
+		printf("The number of elements to be removed is greater.\n");
+	}
+	else
+	{
+		dbNode* ptemp = pdl->head->next;
+		dbNode* pprev = pdl->head;
+		int index_element = 0;
+		while (index_element != index)
+		{
+			pprev = ptemp;
+			ptemp = ptemp->next;
+			index_element++;
+		}
+
+		for (int i = 0; i < cnt; i++)
+		{
+			// if the node is tail node
+			if (NULL == ptemp->next)
+			{
+				free(ptemp);
+				pprev->next = NULL;
+				pdl->tail = pprev; // do not forget the tail pointer
+				return;
+			}
+			else // oterwise
+			{
+				pprev->next = ptemp->next;
+				ptemp->next->prev = pprev;
+				free(ptemp);
+				ptemp = pprev->next;
+			}
+		}
+		
+	}
+
+}
+
+void Traverse(dbList* pdl)
+{
+	int count = Size(pdl);
+	dbNode* ptemp = pdl->head;
+
+	for (int i = 0; i < count; i++)
+	{
+		ptemp = ptemp->next;
+		printf("%d\n", ptemp->data);
+	}
 }
