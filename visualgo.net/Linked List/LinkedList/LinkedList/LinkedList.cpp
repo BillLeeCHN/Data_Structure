@@ -11,51 +11,57 @@ LList* Create();
 void Add(LList* head, int value);
 void Insert(LList* head, int index, int value);
 int Search(LList* head, int value);
-void Remove(LList* head, int index);
+void RemoveRange(LList* head, int index, int count);
 int Size(LList* head);
 void Print(LList* head);
+int Get(LList* head, int index);
 
 int main()
 {
+	// Create
 	LList* p = Create();
+	// Add
 	Add(p, 10);
 	Add(p, 20);
 	Add(p, 30);
 	Add(p, 40);
-
+	// Insert
 	Insert(p, 1, 10);
-
-	Remove(p, 2);
-
+	// RemoveRange
+	RemoveRange(p, 2, 4);
+	// Search
 	int re = Search(p, 40);
 	printf("the index of this element is %d\n", re);
-
+	// Size
 	int size = Size(p);
 	printf("the size of this list is %d\n", size);
-
+	// Print
 	Print(p);
-	
+	// Get
+	int get_result = Get(p, 2);
+	printf("The element you want is %d\n", get_result);
+
 	return 0;
 }
 
-// ´´½¨Ò»¸ö¿ÕµÄÁ´±í£¬½öÓÐÍ·½áµãºÍÍ·Ö¸Õë
+// Create an empty list which just has a head point and a head node
 LList* Create()
 {
 	LList* head; // head pointer
 	head = (LList*)malloc(sizeof(LList));
 
 	//create failed
-	if (head==NULL) 
-	{ 
-        printf("´´½¨Á´±íÊ§°Ü£¡");
-        return NULL;
+	if (NULL == head)
+	{
+		printf("Create failed.\n");
+		exit(-1);
     }
 
 	head->next = NULL;
 	return head;
 }
 
-// ÏòÁ´±íÎ²²¿Ìí¼ÓÔªËØ
+// Add new element into tail node
 void Add(LList* head, int value)
 {
 	LList* ptemp = head;
@@ -70,11 +76,11 @@ void Add(LList* head, int value)
 	// Create a new node
 	LList* pnew;
 	pnew = (LList*)malloc(sizeof(LList));
-	//´´½¨Ê§°Ü·µ»Ø
-	if (pnew==NULL) 
-	{ 
-        printf("´´½¨Á´±íÊ§°Ü£¡");
-        return;
+	//Create failed
+	if (NULL == pnew)
+	{
+		printf("Create failed.\n");
+		exit(-1);
     }
 	pnew->next = NULL;
 	pnew->data = value; // assign a value
@@ -83,15 +89,15 @@ void Add(LList* head, int value)
 	ptemp->next = pnew;
 }
 
-// ¹¦ÄÜ£ºÏòÁ´±íµÄË÷ÒýÎª index µÄÎ»ÖÃ²åÈëÒ»¸öÖµ value
+// åŠŸèƒ½ï¼šå‘é“¾è¡¨çš„ç´¢å¼•ä¸º index çš„ä½ç½®æ’å…¥ä¸€ä¸ªå€¼ value
 void Insert(LList* head, int index, int value)
 {
 	LList* pnew;
 	pnew = (LList*)malloc(sizeof(LList));
-	//´´½¨Ê§°Ü·µ»Ø
-	if (pnew==NULL) 
-	{ 
-        printf("´´½¨½áµãÊ§°Ü£¡");
+	//åˆ›å»ºå¤±è´¥è¿”å›ž
+	if (pnew==NULL)
+	{
+        printf("åˆ›å»ºç»“ç‚¹å¤±è´¥ï¼\n");;
         return;
     }
 	pnew->next = NULL;
@@ -112,12 +118,12 @@ void Insert(LList* head, int index, int value)
 	ptemp->next = pnew;
 }
 
-// ¹¦ÄÜ£ºÔÚÁ´±íÖÐËÑË÷Ä³¸öÖµ£¬·µ»ØËùÔÚµÄË÷ÒýÎ»ÖÃ
+// åŠŸèƒ½ï¼šåœ¨é“¾è¡¨ä¸­æœç´¢æŸä¸ªå€¼ï¼Œè¿”å›žæ‰€åœ¨çš„ç´¢å¼•ä½ç½®
 int Search(LList* head, int value)
 {
 	LList* ptemp;
 
-	// ÅÐ¶ÏÁ´±íÓÐÃ»ÓÐÔªËØ
+	// åˆ¤æ–­é“¾è¡¨æœ‰æ²¡æœ‰å…ƒç´ 
 	if (head->next == NULL)
 	{
 		printf("There is no element in this link list!");
@@ -142,12 +148,12 @@ int Search(LList* head, int value)
 	return -1;
 }
 
-// ¹¦ÄÜ£ºÉ¾³ýÁ´±í index Î»ÖÃµÄÖµ
-void Remove(LList* head, int index)
+// åŠŸèƒ½ï¼šåˆ é™¤é“¾è¡¨ index ä½ç½®çš„å€¼
+void RemoveRange(LList* head, int index, int count)
 {
 	LList* ptemp, *pprev;
 
-	// ÅÐ¶ÏÁ´±íÓÐÃ»ÓÐÔªËØ
+	// åˆ¤æ–­é“¾è¡¨æœ‰æ²¡æœ‰å…ƒç´ 
 	if (head->next == NULL)
 	{
 		printf("There is no element in this link list!");
@@ -155,21 +161,36 @@ void Remove(LList* head, int index)
 	}
 
 	ptemp = head->next;
+	pprev = head;
 	int index_ele = 0;
 	while(index_ele != index)
 	{
-		index_ele++;
-		pprev = ptemp;
-		ptemp = ptemp->next;
 		if (ptemp->next == NULL)
 		{
 			printf("invalid removed index");
 			return ;
 		}
+		index_ele++;
+		pprev = ptemp;
+		ptemp = ptemp->next;
 	}
-	pprev->next = ptemp->next;
-	ptemp->next = NULL;
-	free(ptemp);
+	// remove the node
+	for (int i = 0; i < count; i++)
+	{
+		if (NULL == ptemp->next)  // if the node is the last node
+		{
+			pprev->next = NULL;
+			free(ptemp);
+			break;
+		}
+		else // if the node is not the last node
+		{
+			pprev->next = ptemp->next;
+			ptemp->next = NULL;
+			free(ptemp);
+			ptemp = pprev->next;
+		}
+	}
 }
 
 // Function: Count the element
@@ -195,4 +216,31 @@ void Print(LList* head)
 		ptemp = ptemp->next;
 		printf("%d\n", ptemp->data);
 	}
+}
+
+int Get(LList* head, int index)
+{
+	if (NULL == head->next)
+	{
+		printf("There is no element in this list.\n");
+		exit(-1);
+	}
+
+	// this list is not empty.
+	// Move to the target position(index)
+	LList* ptemp = head->next;
+	int index_ele = 0;
+	int result;
+	while (index_ele != index)
+	{
+		if (NULL == ptemp->next)
+		{
+			printf("Get funtion: the index is out of range.\n");
+			exit(-1);
+		}
+		ptemp = ptemp->next;
+		index_ele++;
+	}
+	result = ptemp->data;
+	return result;
 }
