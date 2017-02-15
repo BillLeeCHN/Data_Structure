@@ -41,7 +41,7 @@ int main()
 	// Insert
 	Insert(&dl, 1, 20);
 	// Remove
-	Remove(&dl,-1);
+	Remove(&dl,1);
 	// RemoveRange
 	//RemoveRange(&dl,1,1);
 	// Size
