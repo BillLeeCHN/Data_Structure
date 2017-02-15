@@ -18,6 +18,7 @@ void Create(dbList* pdl);
 void Add(dbList* pdl, int value);
 bool IsEmpty(dbList* pdl);
 void Insert(dbList* pdl, int index, int value);
+int Size(dbList* pdl);
 
 int main()
 {
@@ -36,6 +37,9 @@ int main()
 	}
 
 	Insert(&dl, 1, 20);
+
+	int size_list = Size(&dl);
+	printf("The size of list is %d\n", size_list);
 
 	return 0;
 }
@@ -130,4 +134,17 @@ void Insert(dbList* pdl, int index, int value)
 	pnew->prev = pprev;
 	pnew->next = ptemp;
 	ptemp->prev = pnew;
+}
+
+int Size(dbList* pdl)
+{
+	int count = 0;
+	dbNode* ptemp = pdl->head;
+
+	while (pdl->tail != ptemp)
+	{
+		ptemp = ptemp->next;
+		count++;
+	}
+	return count;
 }
