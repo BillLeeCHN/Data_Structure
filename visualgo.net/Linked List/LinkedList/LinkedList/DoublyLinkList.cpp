@@ -41,7 +41,7 @@ int main()
 	// Insert
 	Insert(&dl, 1, 20);
 	// Remove
-	Remove(&dl,1);
+	Remove(&dl,0);
 	// RemoveRange
 	//RemoveRange(&dl,1,1);
 	// Size
@@ -117,7 +117,6 @@ void Insert(dbList* pdl, int index, int value)
 
 	// Insert a node
 	dbNode* ptemp = pdl->head;
-	dbNode* pprev = pdl->head;
 	while (index != 0)
 	{
 		if (NULL == ptemp->next)
@@ -126,7 +125,7 @@ void Insert(dbList* pdl, int index, int value)
 			return;
 		}
 		ptemp = ptemp->next;
-		pprev = pprev->next;
+		//pprev = pprev->next;
 		index--;
 	}
 	// if the postion is the tail of list,
@@ -134,14 +133,17 @@ void Insert(dbList* pdl, int index, int value)
 	if (NULL == ptemp->next)
 	{
 		Add(pdl, value);
-		return;
 	}
-	// otherwise
-	ptemp = ptemp->next;
-	pprev->next = pnew;
-	pnew->prev = pprev;
-	pnew->next = ptemp;
-	ptemp->prev = pnew;
+	else // otherwise
+	{
+		dbNode* pprev = ptemp;
+		ptemp = ptemp->next;
+
+		pprev->next = pnew;
+		pnew->prev = pprev;
+		pnew->next = ptemp;
+		ptemp->prev = pnew;
+	}
 }
 
 int Size(dbList* pdl)
