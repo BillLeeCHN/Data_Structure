@@ -41,7 +41,7 @@ int main()
 	// Insert
 	Insert(&dl, 1, 20);
 	// Remove
-	Remove(&dl,0);
+	Remove(&dl,-1);
 	// RemoveRange
 	//RemoveRange(&dl,1,1);
 	// Size
@@ -169,8 +169,11 @@ void RemoveRange(dbList* pdl, int index, int cnt)
 	// if the doubly linked list is empty
 	// it can not be removed any element
 	int count = Size(pdl);
-
-	if (0 == count)
+	if (index < 0)
+	{
+		printf("The index can not be negative.\n");
+	}
+	else if (0 == count)
 	{
 		printf("There is no element in this doubly linked list.\n");
 		//return;
