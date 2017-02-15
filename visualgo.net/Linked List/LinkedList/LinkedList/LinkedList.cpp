@@ -106,14 +106,23 @@ void Insert(LList* head, int index, int value)
 	LList* ptemp = head;
 	while (index != 0)
 	{
-		ptemp = ptemp->next;
-		if (ptemp == NULL)
+		if (NULL == ptemp)
 		{
 			printf("Please enter a valid index!\n");
 			return;
 		}
+		ptemp = ptemp->next;
 		index--;
 	}
+
+	// if the position is the tail of list
+	// just call Add function
+	if (NULL == ptemp->next)
+	{
+		Add(head, value);
+		return;
+	}
+	// otherwise
 	pnew->next = ptemp->next;
 	ptemp->next = pnew;
 }
