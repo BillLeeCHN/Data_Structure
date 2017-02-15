@@ -17,6 +17,7 @@ typedef struct _dbList
 void Create(dbList* pdl);
 void Add(dbList* pdl, int value);
 bool IsEmpty(dbList* pdl);
+void Insert(dbList* pdl, int index, int value);
 
 int main()
 {
@@ -34,6 +35,7 @@ int main()
 		printf("not empty\n");
 	}
 
+	Insert(&dl, 1, 20);
 
 	return 0;
 }
@@ -85,7 +87,6 @@ bool IsEmpty(dbList* pdl)
 	{
 		return false;
 	}
-
 }
 
 // Insert element
@@ -104,9 +105,29 @@ void Insert(dbList* pdl, int index, int value)
 
 	// Insert a node
 	dbNode* ptemp = pdl->head;
-	while (ptemp)
+	dbNode* pprev = pdl->head;
+	while (index != 0)
 	{
-
+		if (NULL == ptemp->next)
+		{
+			printf("Please enter a valid index!\n");
+			return;
+		}
+		ptemp = ptemp->next;
+		pprev = pprev->next;
+		index--;
 	}
-
+	// if the postion is the tail of list,
+	// just call Add funtion
+	if (NULL == ptemp->next)
+	{
+		Add(pdl, value);
+		return;
+	}
+	// otherwise
+	ptemp = ptemp->next;
+	pprev->next = pnew;
+	pnew->prev = pprev;
+	pnew->next = ptemp;
+	ptemp->prev = pnew;
 }
