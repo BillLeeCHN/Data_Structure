@@ -21,6 +21,7 @@ void Insert(dbList* pdl, int index, int value);
 int Size(dbList* pdl);
 void Remove(dbList* pdl, int index);
 void RemoveRange(dbList* pdl, int index, int cnt);
+void Traverse(dbList* pdl);
 
 int main()
 {
@@ -46,6 +47,8 @@ int main()
 	// Size
 	int size_list = Size(&dl);
 	printf("The size of list is %d\n", size_list);
+	// Traverse
+	Traverse(&dl);
 	return 0;
 }
 
@@ -212,4 +215,16 @@ void RemoveRange(dbList* pdl, int index, int cnt)
 		
 	}
 
+}
+
+void Traverse(dbList* pdl)
+{
+	int count = Size(pdl);
+	dbNode* ptemp = pdl->head;
+
+	for (int i = 0; i < count; i++)
+	{
+		ptemp = ptemp->next;
+		printf("%d\n", ptemp->data);
+	}
 }
